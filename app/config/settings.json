@@ -1,0 +1,29 @@
+{
+    "bookmakers": {
+        "betfair": {
+            "links": {
+                "base_event_url": "https://www.betfair.it",
+                "daily_soccer_events": "https://www.betfair.it/sport/football",
+                "market_type_codes": [
+                    "BOTH_TEAMS_TO_SCORE",
+                    "OVER_UNDER_15",
+                    "OVER_UNDER_25",
+                    "OVER_UNDER_35",
+                    "OVER_UNDER_45"
+                ]
+            },
+            "lang": {
+                "it": {
+                    "today": "oggi",
+                    "suspended": "Sospeso"
+                }
+            },
+            "limit": 99
+        }
+    },
+    "selenium": {
+        "window_size": "--window-size=1200,1200",
+        "web_driver_wait": 10,
+        "headless": true
+    }
+}
