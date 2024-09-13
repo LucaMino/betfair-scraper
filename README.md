@@ -15,7 +15,7 @@ Betfair Scraper is a Python project that collects match data, markets, and respe
 <!-- USAGE -->
 ### Usage
 1. Activate venv
-2. Run
+2. Run script
    ```sh
    python app/main.py
    ```
