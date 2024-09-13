@@ -7,7 +7,7 @@ Betfair Scraper is a Python project that collects match data, markets, and respe
 ### Installation
 1. Clone the repo
    ```sh
-   git clone https://github.com/LucaMino/cash-tracker-bot.git
+   git clone https://github.com/LucaMino/betfair-scraper.git
    ```
 2. Update [settings.json](src/config/settings.json)
 
