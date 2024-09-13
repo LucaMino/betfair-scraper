@@ -21,6 +21,7 @@ class Betfair:
             for index, market in enumerate(helper.config('bookmakers.betfair.links.market_type_codes')):
                 # navigate to route
                 route = helper.config('bookmakers.betfair.links.daily_soccer_events') + '?marketType=' + market
+                print(route)
                 helper.route(self.driver, route)
                 # reject cookie in headless mode
                 if not helper.config('bookmakers.betfair.headless'):
@@ -156,96 +157,94 @@ class Betfair:
         if helper.config('bookmakers.betfair.lang.it.suspended') in quotes or not quotes:
             return False
 
-        match market:
-            case '1X2':
-                if len(quotes) != 3:
-                    return False
-                # set runners
-                runners = [
-                    {
-                        'book': 'BETFAIR',
-                        'market': '1',
-                        'quote': quotes[0]
-                    },
-                    {
-                        'book': 'BETFAIR',
-                        'market': 'X',
-                        'quote': quotes[1]
-                    },
-                        {
-                        'book': 'BETFAIR',
-                        'market': '2',
-                        'quote': quotes[2]
-                    }
-                ]
-            case 'BOTH_TEAMS_TO_SCORE':
-                if len(quotes) != 2:
-                    return False
-                runners = [
-                    {
-                        'book': 'BETFAIR',
-                        'market': 'YES',
-                        'quote': quotes[0]
-                    },
-                    {
-                        'book': 'BETFAIR',
-                        'market': 'NO',
-                        'quote': quotes[1]
-                    }
-                ]
-            case 'DOUBLE_CHANCE':
-                if len(quotes) != 3:
-                    return False
-                runners = [
-                    {
-                        'book': 'BETFAIR',
-                        'market': '1X',
-                        'quote': quotes[0]
-                    },
-                    {
-                        'book': 'BETFAIR',
-                        'market': 'X2',
-                        'quote': quotes[1]
-                    },
-                    {
-                        'book': 'BETFAIR',
-                        'market': '12',
-                        'quote': quotes[2]
-                    }
-                ]
-            case 'DRAW_NO_BET':
-                if len(quotes) != 2:
-                    return False
-                runners = [
-                    {
-                        'book': 'BETFAIR',
-                        'market': '1',
-                        'quote': quotes[0]
-                    },
-                    {
-                        'book': 'BETFAIR',
-                        'market': '2',
-                        'quote': quotes[1]
-                    }
-                ]
-            case 'OVER_UNDER_05' | 'OVER_UNDER_15' | 'OVER_UNDER_25' | 'OVER_UNDER_35' | 'OVER_UNDER_45':
-                if len(quotes) != 2:
-                    return False
-                runners = [
-                    {
-                        'book': 'BETFAIR',
-                        'market': 'OVER',
-                        'quote': quotes[0]
-                    },
-                    {
-                        'book': 'BETFAIR',
-                        'market': 'UNDER',
-                        'quote': quotes[1]
-                    }
-                ]
-            case _:
-                helper.print_c('Error on betfair market type switch, market: ' + market, 'red')
+        if market == '1X2':
+            if len(quotes) != 3:
                 return False
+            runners = [
+                {
+                    'book': 'BETFAIR',
+                    'market': '1',
+                    'quote': quotes[0]
+                },
+                {
+                    'book': 'BETFAIR',
+                    'market': 'X',
+                    'quote': quotes[1]
+                },
+                {
+                    'book': 'BETFAIR',
+                    'market': '2',
+                    'quote': quotes[2]
+                }
+            ]
+        elif market == 'BOTH_TEAMS_TO_SCORE':
+            if len(quotes) != 2:
+                return False
+            runners = [
+                {
+                    'book': 'BETFAIR',
+                    'market': 'YES',
+                    'quote': quotes[0]
+                },
+                {
+                    'book': 'BETFAIR',
+                    'market': 'NO',
+                    'quote': quotes[1]
+                }
+            ]
+        elif market == 'DOUBLE_CHANCE':
+            if len(quotes) != 3:
+                return False
+            runners = [
+                {
+                    'book': 'BETFAIR',
+                    'market': '1X',
+                    'quote': quotes[0]
+                },
+                {
+                    'book': 'BETFAIR',
+                    'market': 'X2',
+                    'quote': quotes[1]
+                },
+                {
+                    'book': 'BETFAIR',
+                    'market': '12',
+                    'quote': quotes[2]
+                }
+            ]
+        elif market == 'DRAW_NO_BET':
+            if len(quotes) != 2:
+                return False
+            runners = [
+                {
+                    'book': 'BETFAIR',
+                    'market': '1',
+                    'quote': quotes[0]
+                },
+                {
+                    'book': 'BETFAIR',
+                    'market': '2',
+                    'quote': quotes[1]
+                }
+            ]
+        elif market in ('OVER_UNDER_05', 'OVER_UNDER_15', 'OVER_UNDER_25', 'OVER_UNDER_35', 'OVER_UNDER_45'):
+            if len(quotes) != 2:
+                return False
+            runners = [
+                {
+                    'book': 'BETFAIR',
+                    'market': 'OVER',
+                    'quote': quotes[0]
+                },
+                {
+                    'book': 'BETFAIR',
+                    'market': 'UNDER',
+                    'quote': quotes[1]
+                }
+            ]
+        else:
+            helper.print_c('Error on betfair market type switch, market: ' + market, 'red')
+            return False
 
         data = {
             'market_type': market,
